@@ -1,0 +1,11 @@
+running: cd "/home/xenontf/Projects/glfw_template/target/debug/build/glfw-sys-6cca61ea747c6250/out/build" && CMAKE_PREFIX_PATH="" LC_ALL="C" "cmake" "/home/xenontf/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/glfw-sys-7.0.0/./glfw" "-B" "/home/xenontf/Projects/glfw_template/target/debug/build/glfw-sys-6cca61ea747c6250/out/build" "-DGLFW_BUILD_EXAMPLES=OFF" "-DGLFW_BUILD_TESTS=OFF" "-DGLFW_BUILD_DOCS=OFF" "-DCMAKE_INSTALL_LIBDIR=lib" "-DGLFW_BUILD_WAYLAND=ON" "-DGLFW_BUILD_X11=ON" "-DGLFW_LIBRARY_TYPE=SHARED" "-DCMAKE_INSTALL_PREFIX=/home/xenontf/Projects/glfw_template/target/debug/build/glfw-sys-6cca61ea747c6250/out" "-DCMAKE_C_FLAGS= -ffunction-sections -fdata-sections -fPIC -m64 -w" "-DCMAKE_C_COMPILER=/usr/bin/cc" "-DCMAKE_CXX_FLAGS= -ffunction-sections -fdata-sections -fPIC -m64 -w" "-DCMAKE_CXX_COMPILER=/usr/bin/c++" "-DCMAKE_ASM_FLAGS= -ffunction-sections -fdata-sections -fPIC -m64 -w" "-DCMAKE_ASM_COMPILER=/usr/bin/cc" "-DCMAKE_BUILD_TYPE=Debug"
+CMake Warning:
+  Manually-specified variables were not used by the project:
+
+    CMAKE_ASM_COMPILER
+    CMAKE_ASM_FLAGS
+    CMAKE_CXX_COMPILER
+    CMAKE_CXX_FLAGS
+
+
+running: cd "/home/xenontf/Projects/glfw_template/target/debug/build/glfw-sys-6cca61ea747c6250/out/build" && LC_ALL="C" MAKEFLAGS="-j --jobserver-fds=8,9 --jobserver-auth=8,9" "cmake" "--build" "/home/xenontf/Projects/glfw_template/target/debug/build/glfw-sys-6cca61ea747c6250/out/build" "--target" "install" "--config" "Debug"
