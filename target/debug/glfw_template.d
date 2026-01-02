@@ -1,1 +1,1 @@
-/home/xenontf/Projects/glfw_template/target/debug/glfw_template: /home/xenontf/Projects/glfw_template/src/main.rs /home/xenontf/Projects/glfw_template/src/shader.rs
+/home/xenontf/Projects/glfw_template/target/debug/glfw_template: /home/xenontf/Projects/glfw_template/src/camera.rs /home/xenontf/Projects/glfw_template/src/main.rs /home/xenontf/Projects/glfw_template/src/render.rs /home/xenontf/Projects/glfw_template/src/util.rs

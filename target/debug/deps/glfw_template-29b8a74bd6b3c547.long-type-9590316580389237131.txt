@@ -1,0 +1,2 @@
+nalgebra::base::matrix::Matrix<_, nalgebra::base::dimension::Const<1>, nalgebra::base::dimension::Const<1>, nalgebra::base::array_storage::ArrayStorage<_, 1, 1>>
+nalgebra::base::matrix::Matrix<_, nalgebra::base::dimension::Const<1>, nalgebra::base::dimension::Const<1>, nalgebra::base::array_storage::ArrayStorage<_, 1, 1>>: RealNumber
