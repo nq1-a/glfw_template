@@ -1,8 +1,0 @@
-{
-	"InstallScripts" : 
-	[
-		"/home/xenontf/Projects/glfw_template/target/debug/build/glfw-sys-9877d2d98e11e884/out/build/cmake_install.cmake",
-		"/home/xenontf/Projects/glfw_template/target/debug/build/glfw-sys-9877d2d98e11e884/out/build/src/cmake_install.cmake"
-	],
-	"Parallel" : false
-}
