@@ -1,0 +1,13 @@
+prefix=/home/xenontf/Projects/glfw_template/target/debug/build/glfw-sys-6deec061a5085427/out
+exec_prefix=${prefix}
+includedir=/home/xenontf/Projects/glfw_template/target/debug/build/glfw-sys-6deec061a5085427/out/include
+libdir=/home/xenontf/Projects/glfw_template/target/debug/build/glfw-sys-6deec061a5085427/out/lib
+
+Name: GLFW
+Description: A multi-platform library for OpenGL, window and input
+Version: 3.4.0
+URL: https://www.glfw.org/
+Requires.private: 
+Libs: -L${libdir} -lglfw
+Libs.private:  -lrt -lm -ldl
+Cflags: -I${includedir}

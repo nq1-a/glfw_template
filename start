@@ -1,3 +1,21 @@
 #!/bin/bash
 
-clear && RUST_BACKTRACE=1 cargo run -- ${@:1}
+clear
+
+case $(((RANDOM % 8) + 1)) in
+0) echo "Would you like another compiler error, sir?" ;;
+1) echo "impl<'a> Model<'a>" ;;
+2) echo "Haskell is for mathematicians that pretend to be coders" ;;
+3) echo "Did you know that the capital of Botswana is Gaborone?" ;;
+4) echo "LeBron James caught using if statements to check IDs" ;;
+5) echo "OCaml? I hardly know her" ;;
+6) echo "Chromebooks are better than MacBooks" ;;
+7) echo "If you are reading this then you are probably autistic" ;;
+esac
+
+case "$1" in
+"prod") RUST_BACKTRACE=1 RUSTFLAGS="-D warnings" cargo run -- ${@:2} ;;
+"test") RUST_BACKTRACE=1 RUSTFLAGS="-A unsafe_op_in_unsafe_fn" cargo run -- ${@:2} ;;
+"clean") RUST_BACKTRACE=1 RUSTFLAGS="-A warnings" cargo run -- ${@:2} ;;
+*) echo "Subcommand not found" ;;
+esac

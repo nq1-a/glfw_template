@@ -1,4 +1,5 @@
 use std::env;
+use std::rc::Rc;
 
 use gl;
 use nalgebra_glm as glm;
@@ -15,14 +16,25 @@ use glfw::{
 };
 
 mod camera;
+mod object;
 mod render;
 mod util;
 
-use crate::camera::Camera;
-use crate::render::{add_uniform, build_shader};
-use crate::util::ident_mat4;
-
-type Vertex = [f32; 3];
+use crate::{
+    camera::Camera,
+    object::{
+        mesh::Mesh,
+        model::Model,
+        registry::Registry,
+        Render,
+        Vertex,
+    },
+    render::{
+        add_uniform,
+        build_shader,
+    },
+    util::ident_mat4,
+};
 
 fn main() {
     let mut glfw = glfw::init(fail_on_errors!()).unwrap();
@@ -49,6 +61,7 @@ fn main() {
     );
 
     unsafe {
+        gl::PolygonMode(gl::FRONT_AND_BACK, gl::LINE);
         //gl::Enable(gl::CULL_FACE);
         //gl::CullFace(gl::BACK);
         //gl::FrontFace(gl::CCW);
@@ -95,21 +108,9 @@ fn main() {
         gl::LinkProgram(program);
         gl::UseProgram(program);
     }
-
-    // Generate objects
-    unsafe {
-        // Vertex array object
-        let mut vao = 0;
-        gl::GenVertexArrays(1, &mut vao);
-        gl::BindVertexArray(vao);
-        
-        // Vertex buffer object
-        let mut vbo = 0;
-        gl::GenBuffers(1, &mut vbo);
-        gl::BindBuffer(gl::ARRAY_BUFFER, vbo)
-    }
-
-    const vertex_data: [Vertex; 36] = [
+    
+    // Load meshes
+    const cube_vertex_data: [Vertex; 36] = [
         [-0.5,  -0.5,   -0.5],
         [0.5,   -0.5,   -0.5],
         [0.5,   0.5,    -0.5],
@@ -148,24 +149,24 @@ fn main() {
         [-0.5,  0.5,    -0.5],
     ];
 
+    let cube_mesh: Rc<Mesh> = unsafe {
+        Mesh::new(program, &cube_vertex_data)
+    };
+
+    // Create objects
+    let mut registry: Registry = Registry::new();
+
     unsafe {
-        gl::BufferData(
-            gl::ARRAY_BUFFER,
-            size_of_val(&vertex_data) as isize,
-            vertex_data.as_ptr().cast(),
-            gl::STATIC_DRAW,
-        );
-
-        gl::VertexAttribPointer(
-            0,
-            3,
-            gl::FLOAT,
-            gl::FALSE,
-            size_of::<Vertex>().try_into().unwrap(),
-            0 as *const _,
-        );
-
-        gl::EnableVertexAttribArray(0);
+        for i in 1..101 {
+            for j in 1..11 {
+                for k in 1..11 {
+                    registry.add(Box::new(Model::new(
+                        glm::vec3(i as f32 * 1.1, j as f32 * 1.1, k as f32 * 1.1),
+                        cube_mesh.clone()
+                    )));
+                }
+            }
+        }
     }
 
     // Initialization of variables
@@ -183,7 +184,6 @@ fn main() {
 
     let mut keys: [bool; 1024] = [false; 1024];
 
-
     // Main loop
     while !window.should_close() {
         // Get delta time
@@ -192,7 +192,7 @@ fn main() {
 
         if dt < delay {continue;}
 
-        //println!("{}", (1./dt) as i32);
+        println!("{}", (1./dt) as i32);
         last_time = current_time;
 
         // Fix window size
@@ -221,8 +221,8 @@ fn main() {
 
                 WindowEvent::CursorPos(x, y) => {
                     cam.rotate(
-                        dt * (x - mouse_x) as f32,
-                        dt * (mouse_y - y) as f32
+                        0.4 * dt * (x - mouse_x) as f32,
+                        0.4 * dt * (mouse_y - y) as f32
                     );
 
                     mouse_x = x;
@@ -242,12 +242,11 @@ fn main() {
         // Rendering
         unsafe {
             // Create matrices
-            let mut model: glm::Mat4 = ident_mat4();
-            let mut view: glm::Mat4 = cam.make_view(); 
+            let model: glm::Mat4 = ident_mat4();
+            let view: glm::Mat4 = cam.make_view(); 
             let projection: glm::Mat4 = glm::perspective((last_width as f32) / (last_height as f32), 0.7853982, 0.1, 100.0);
 
             // Assign matrices
-            add_uniform(program, model, "model");
             add_uniform(program, view, "view");
             add_uniform(program, projection, "projection");
 
@@ -256,7 +255,9 @@ fn main() {
             gl::Clear(gl::COLOR_BUFFER_BIT | gl::DEPTH_BUFFER_BIT | gl::STENCIL_BUFFER_BIT);
 
             // Draw objects
-            gl::DrawArrays(gl::TRIANGLES, 0, 36);
+            for obj in &registry.objects {
+                obj.render();
+            }
         }
 
         window.swap_buffers();

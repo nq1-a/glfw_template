@@ -12,18 +12,18 @@ pub struct Camera {
 }
 
 impl Camera {
-    pub fn new(pos: Vec3, yw: f32, ph: f32) -> Camera {
+    pub fn new(position: Vec3, yaw: f32, pitch: f32) -> Camera {
         let mut cam = Camera {
-            position: pos,
-            yaw: yw,
-            pitch: ph,
+            position,
+            yaw,
+            pitch,
             front: glm::vec3(0., 0., 0.),
             up: glm::vec3(0., 1., 0.),
             right: glm::vec3(0., 0., 0.),
         };
 
         cam.update();
-        return cam;
+        cam
     }
 
     fn update(&mut self) {
@@ -36,7 +36,7 @@ impl Camera {
     }
 
     pub fn make_view(&self) -> glm::Mat4 {
-        return glm::look_at(
+        glm::look_at(
             &self.position,
             &(self.position + self.front),
             &self.up

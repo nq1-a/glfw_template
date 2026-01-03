@@ -1,5 +1,3 @@
-#![allow(unsafe_op_in_unsafe_fn)]
-
 use std::ffi::CString;
 
 use gl;
@@ -27,7 +25,7 @@ pub unsafe fn build_shader(program: GLuint, shader: &str, stype: GLenum) -> GLui
     gl::AttachShader(program, glshader);
     gl::DeleteShader(glshader);
 
-    return glshader;
+    glshader
 }
 
 pub unsafe fn add_uniform(program: GLuint, mat: Mat4, mtype: &str) {
