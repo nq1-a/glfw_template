@@ -1,1 +1,0 @@
-{"rustc":7480487221693460596,"features":"[]","declared_features":"[]","target":12048623457854363818,"profile":15657897354478470176,"path":12405237444476456724,"deps":[],"local":[{"CheckDepInfo":{"dep_info":"debug/.fingerprint/y4m-c521bf4f777f5485/dep-lib-y4m","checksum":false}}],"rustflags":["-A","unsafe_op_in_unsafe_fn"],"config":2069994364910194474,"compile_kind":0}
