@@ -26,16 +26,15 @@ impl Model<'_> {
 }
 
 impl Render for Model<'_> {
-    unsafe fn render(&self) {
+    unsafe fn render(&self, shader: gl::types::GLuint) {
+        add_uniform(shader, self.cframe, "model");
+
         gl::BindVertexArray(self.mesh.vao);
-        add_uniform(self.mesh.program, self.cframe, "model");
-
-        gl::DrawArrays(
+        gl::DrawElements(
             gl::TRIANGLES,
-            0,
-            self.mesh.data_size() as i32
+            self.mesh.index_count() as i32,
+            gl::UNSIGNED_INT,
+            std::ptr::null()
         );
-
-        gl::BindVertexArray(0);
     }
 } 
